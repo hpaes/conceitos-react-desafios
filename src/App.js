@@ -14,7 +14,7 @@ function App() {
 
   async function handleAddRepository() {
     const response = await api.post('repositories', {
-      title: "Front-end with React",
+      title: `Novo Repositório ${Date.now()}`,
       url: 'http://github.com/hpaes',
       techs: [
         'ReactJS',
@@ -32,20 +32,21 @@ function App() {
     setRepositories(repositories.filter(repository => repository.id !== id));
   }
 
+
   return (
     <div>
       <ul data-testid="repository-list">
-        {repositories.map(repository => <li key={repository.id}>
-            {repository.title}
+        {repositories.map(({ id, title }) => (
+          <li key={id}>
+            {title}
 
-            <button type="button" onClick={() => handleRemoveRepository(repository.id)}>
+            <button onClick={() => handleRemoveRepository(id)}>
               Remover
-          </button>
+            </button>
           </li>
-          )}
-
+        ))
+        }
       </ul>
-
       <button onClick={handleAddRepository}>Adicionar</button>
     </div>
   );
